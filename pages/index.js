@@ -1,47 +1,52 @@
-import Image from 'next/image'
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-import NextLink from "next/link"
-import { Link } from '@chakra-ui/react'
-import Articel_Card from '../components/Articel_Card'
+import Image from "next/image";
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+
+import { SimpleGrid, Container } from "@chakra-ui/react";
+import Articel_Card from "../components/Articel_Card";
 
 export default function Home({ posts }) {
   return (
-    <div className="mt-5">
+    <Container maxW='container.xl' >
+    <SimpleGrid minChildWidth='300px' spacing='50px'>
       {posts.map((post, index) => (
-        <NextLink href={'/blog/' + post.slug} passHref key={index}>
-          <Link _hover={{text_decoration: "none"}}>
-          <Articel_Card thumbnail={post.frontMatter.thumbnailUrl}/>
-          </Link>
-        </NextLink>
+        <Articel_Card
+          thumbnail={post.frontMatter.thumbnailUrl}
+          post={post}
+          index={index}
+        />
       ))}
-    </div>
-  )
+    </SimpleGrid>
+    </Container>
+  );
 }
 
 export const getStaticProps = async () => {
-  const files = fs.readdirSync(path.join('posts'))
+  const files = fs.readdirSync(path.join("posts"));
 
-  const posts = files.map(filename => {
-    const markdownWithMeta = fs.readFileSync(path.join('posts', filename), 'utf-8')
-    const { data: frontMatter } = matter(markdownWithMeta)
+  const posts = files.map((filename) => {
+    const markdownWithMeta = fs.readFileSync(
+      path.join("posts", filename),
+      "utf-8"
+    );
+    const { data: frontMatter } = matter(markdownWithMeta);
 
     return {
       frontMatter,
-      slug: filename.split('.')[0]
-    }
-  })
+      slug: filename.split(".")[0],
+    };
+  });
 
   return {
     props: {
-      posts
-    }
-  }
-}
+      posts,
+    },
+  };
+};
 
-
-{/* <div className="card mb-3 pointer" style={{ maxWidth: '540px' }}>
+{
+  /* <div className="card mb-3 pointer" style={{ maxWidth: '540px' }}>
             <div className="row g-0">
               <div className="col-md-8">
                 <div className="card-body">
@@ -63,4 +68,5 @@ export const getStaticProps = async () => {
                 />
               </div>
             </div>
-          </div> */}
+          </div> */
+}
