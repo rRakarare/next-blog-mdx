@@ -12,18 +12,22 @@ import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
 
 export default function Articel_Card({ thumbnail, post, index }) {
+
+  console.log(post)
+
   return (
     <Center py={6}>
       <NextLink href={"/blog/" + post.slug} passHref key={index}>
         <Link
-          _hover={{ text_decoration: "none" }}
+          _hover={{ text_decoration: "none"}}
           _focus={{ outlineColor: "yellow" }}
         >
           <Box
             role={"group"}
             maxW={"445px"}
+            minW={"350px"}
             bg={useColorModeValue("white", "gray.900")}
-            boxShadow={"2xl"}
+            boxShadow={"lg"}
             rounded={"md"}
             
             overflow={"hidden"}
@@ -66,13 +70,10 @@ export default function Articel_Card({ thumbnail, post, index }) {
                 fontSize={"2xl"}
                 fontFamily={"body"}
               >
-                Boost your conversion rate
+                {post.frontMatter.title}
               </Heading>
               <Text color={"gray.500"}>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores et ea rebum.
+              {post.frontMatter.description}
               </Text>
             </Stack>
             <Stack p={6} direction={"row"} spacing={0} align={"center"} position="relative">
@@ -85,9 +86,7 @@ export default function Articel_Card({ thumbnail, post, index }) {
                 <Text fontWeight={600}>Achim Rolle</Text>
                 <Text color={"gray.500"}>Feb 08, 2021 · 6min read</Text>
               </Stack>
-              <Center transition="0.3s ease-in-out"  position="absolute" left={0} height={"100%"} width={"100%"} background="#FDCA4090" transform="translate(0, 100px)" _groupHover={{transform:"translate(0, 0)"}}>
-                <Heading>READ</Heading>
-              </Center>
+
             </Stack>
           </Box>
         </Link>

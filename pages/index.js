@@ -5,9 +5,12 @@ import matter from "gray-matter";
 
 import { SimpleGrid, Container } from "@chakra-ui/react";
 import Articel_Card from "../components/Articel_Card";
+import Hero from "../components/Hero"
 
 export default function Home({ posts }) {
   return (
+    <>
+    <Hero/>
     <Container maxW='container.xl' >
     <SimpleGrid minChildWidth='300px' spacing='50px'>
       {posts.map((post, index) => (
@@ -19,6 +22,7 @@ export default function Home({ posts }) {
       ))}
     </SimpleGrid>
     </Container>
+    </>
   );
 }
 
