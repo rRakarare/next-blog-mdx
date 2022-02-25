@@ -1,5 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import NextNprogress from "nextjs-progressbar";
+import customTheme from "../styles/theme";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -10,7 +11,7 @@ function MyApp({ Component, pageProps }) {
         stopDelayMs={200}
         height={4}
       />
-      <ChakraProvider>
+      <ChakraProvider theme={customTheme}>
         <Component {...pageProps} />
       </ChakraProvider>
     </>

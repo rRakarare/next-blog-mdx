@@ -6,10 +6,12 @@ import matter from "gray-matter";
 import { SimpleGrid, Container } from "@chakra-ui/react";
 import Articel_Card from "../components/Articel_Card";
 import Hero from "../components/Hero"
+import Navbar from "../components/Navbar";
 
 export default function Home({ posts }) {
   return (
     <>
+    <Navbar/>
     <Hero/>
     <Container maxW='container.xl' >
     <SimpleGrid minChildWidth='300px' spacing='50px'>
