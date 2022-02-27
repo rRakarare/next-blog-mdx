@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import {
   Box,
   Heading,
@@ -9,47 +8,106 @@ import {
   Icon,
   useColorModeValue,
   createIcon,
-} from '@chakra-ui/react';
+  Center,
+} from "@chakra-ui/react";
+
+import { motion } from "framer-motion";
 
 export default function CallToActionWithAnnotation() {
+  const icon = {
+    hidden: {
+      opacity: .5,
+      pathLength: 0,
+      fill: "#ffffff"
+
+    },
+    visibleM: {
+      opacity: 1,
+      pathLength: 1,
+      fill: "#263238"
+
+    },
+    visible1: {
+      opacity: 1,
+      pathLength: 1,
+      fill: "#f7d147"
+
+    },
+  };
+
   return (
     <>
-
-
-      <Container maxW={'3xl'}>
+      <Container maxW={"3xl"}>
         <Stack
           as={Box}
-          textAlign={'center'}
+          textAlign={"center"}
           spacing={{ base: 8, md: 14 }}
-          py={{ base: 20, md: 20 }}>
+          py={{ base: 20, md: 20 }}
+        >
           <Heading
             fontWeight={600}
-            fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-            lineHeight={'110%'}>
+            fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
+            lineHeight={"110%"}
+          >
             Neuigkeiten <br />
-            <Text as={'span'} color={'yellow.400'}>
-              M1
-            </Text>
+            <Center>
+            <motion.svg
+              width={300}
+              height={300}
+              viewBox="0 0 122 122"
+            >
+              <motion.path style={{stroke:"#263238", strokeWidth:"2"}}
+                stroke={"#119e2400"}
+                stroke-width={"20"}
+                id="Vector"
+                d="M60.4993 47.7395L85.6897 22.5394H98.4597V32.8693H89.9697L60.4993 62.3396L32.8591 34.6993V98.4604H22.539V22.5405H35.309L60.4993 47.7395Z"
+
+                variants={icon}
+                initial="hidden"
+                animate="visibleM"
+                fill="#263238"
+                transition={{
+                  default: { duration: 1.8, ease: "easeInOut" },
+                  fill: { duration: 2, ease: [1, 0, 0.8, 1] }
+                }}
+              />
+              <motion.path style={{stroke:"#f7d147", strokeWidth:"2"}}
+                id="Vector_2"
+                d="M88.4302 41.6696L79.67 50.4298V56.5697H88.14V98.4585H98.46V41.6669L88.4302 41.6696Z"
+                variants={icon}
+                fill="#f7d147"
+                initial="hidden"
+                animate="visible1"
+                transition={{
+                  default: { duration: 1.8, ease: "easeInOut" },
+                  fill: { duration: 2, ease: [1, 0, 0.8, 1] }
+ 
+                }}
+              />
+            </motion.svg>
+            </Center>
           </Heading>
-          <Text color={'gray.500'}>
+          <Text color={"gray.500"}>
             Monetize your content by charging your most loyal readers and reward
             them loyalty points. Give back to your loyal readers by granting
             them access to your pre-releases and sneak-peaks.
           </Text>
           <Stack
-            direction={'column'}
+            direction={"column"}
             spacing={3}
-            align={'center'}
-            alignSelf={'center'}
-            position={'relative'}>
+            align={"center"}
+            alignSelf={"center"}
+            position={"relative"}
+          >
             <Button
-              colorScheme={'green'}
-              bg={'yellow.400'}
-              rounded={'full'}
+              colorScheme={"green"}
+              bg={"yellow.400"}
+              rounded={"full"}
               px={6}
               _hover={{
-                bg: 'yellow.500',
-              }}>
+                bg: "yellow.500",
+              }}
+            >
               Get Started
             </Button>
           </Stack>
@@ -60,8 +118,8 @@ export default function CallToActionWithAnnotation() {
 }
 
 const Arrow = createIcon({
-  displayName: 'Arrow',
-  viewBox: '0 0 72 24',
+  displayName: "Arrow",
+  viewBox: "0 0 72 24",
   path: (
     <path
       fillRule="evenodd"

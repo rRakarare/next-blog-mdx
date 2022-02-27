@@ -1,117 +1,190 @@
-import React from "react";
-import { Link, Box, Flex, Text, Button, Stack } from "@chakra-ui/react";
+import { ReactNode, useState } from "react";
+import {
+  Box,
+  Flex,
+  Avatar,
+  HStack,
+  Link,
+  IconButton,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  useDisclosure,
+  useColorModeValue,
+  Stack,
+  VStack,
+  Center,
+} from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { motion } from "framer-motion";
 
-import Logo from "./Logo";
+const Links = ["Dashboard", "Projects", "Team"];
 
-const Navbar = (props) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const toggle = () => setIsOpen(!isOpen);
-
-  return (
-    <NavBarContainer {...props}>
-      <Logo
-        w="100px"
-        color={["white", "white", "primary.500", "primary.500"]}
-      />
-      <MenuToggle toggle={toggle} isOpen={isOpen} />
-      <MenuLinks isOpen={isOpen} />
-    </NavBarContainer>
-  );
-};
-
-const CloseIcon = () => (
-  <svg width="24" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-    <title>Close</title>
-    <path
-      fill="white"
-      d="M9.00023 7.58599L13.9502 2.63599L15.3642 4.04999L10.4142 8.99999L15.3642 13.95L13.9502 15.364L9.00023 10.414L4.05023 15.364L2.63623 13.95L7.58623 8.99999L2.63623 4.04999L4.05023 2.63599L9.00023 7.58599Z"
-    />
-  </svg>
+const Path = (props) => (
+  <motion.path
+    fill="transparent"
+    strokeWidth="3"
+    stroke="currentColor"
+    strokeLinecap="round"
+    {...props}
+  />
 );
 
-const MenuIcon = () => (
-  <svg
-    width="24px"
-    viewBox="0 0 20 20"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="white"
-  >
-    <title>Menu</title>
-    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-  </svg>
-);
+const BurgerButton = ({ isOpen, onClick }) => {
+  const MotionButton = motion(Button);
 
-const MenuToggle = ({ toggle, isOpen }) => {
   return (
-    <Box display={{ base: "block", md: "none" }} onClick={toggle}>
-      {isOpen ? <CloseIcon /> : <MenuIcon />}
-    </Box>
-  );
-};
-
-const MenuItem = ({ children, isLast, to = "/", ...rest }) => {
-  return (
-    <Link href={to}>
-      <Text display="block" {...rest}>
-        {children}
-      </Text>
-    </Link>
-  );
-};
-
-const MenuLinks = ({ isOpen }) => {
-  return (
-    <Box
-      display={{ base: isOpen ? "block" : "none", md: "block" }}
-      flexBasis={{ base: "100%", md: "auto" }}
+    <motion.button
+      className="menu-button"
+      onClick={onClick}
+      animate={isOpen ? "open" : "closed"}
+      initial={false}
+      display={{ base: "none" }}
     >
-      <Stack
-        spacing={8}
-        align="center"
-        justify={["center", "space-between", "flex-end", "flex-end"]}
-        direction={["column", "row", "row", "row"]}
-        pt={[4, 4, 0, 0]}
+      <svg
+        width="23"
+        height="23"
+        style={{ margin: "4px 0 0 2px" }}
+        viewBox="0 0 23 23"
       >
-        <MenuItem to="/">Home</MenuItem>
-        <MenuItem to="/how">How It works </MenuItem>
-        <MenuItem to="/faetures">Features </MenuItem>
-        <MenuItem to="/pricing">Pricing </MenuItem>
-        <MenuItem to="/signup" isLast>
-          <Button
-            size="sm"
-            rounded="md"
-            color={["primary.500", "primary.500", "white", "white"]}
-            bg={["white", "white", "primary.500", "primary.500"]}
-            _hover={{
-              bg: ["primary.100", "primary.100", "primary.600", "primary.600"]
-            }}
-          >
-            Create Account
-          </Button>
-        </MenuItem>
-      </Stack>
-    </Box>
+        <Path
+          variants={{
+            closed: { d: "M 2 2.5 L 20 2.5" },
+            open: { d: "M 3 16.5 L 17 2.5" },
+          }}
+        />
+        <Path
+          d="M 2 9.423 L 20 9.423"
+          variants={{
+            closed: { opacity: 1 },
+            open: { opacity: 0 },
+          }}
+          transition={{ duration: 0.1 }}
+        />
+        <Path
+          variants={{
+            closed: { d: "M 2 16.346 L 20 16.346" },
+            open: { d: "M 3 2.5 L 17 16.346" },
+          }}
+        />
+      </svg>
+    </motion.button>
   );
 };
 
-const NavBarContainer = ({ children, ...props }) => {
+const NavLink = ({ children }) => (
+  <Link
+    px={2}
+    py={1}
+    rounded={"md"}
+    _hover={{
+      textDecoration: "none",
+      bg: useColorModeValue("gray.200", "gray.700"),
+    }}
+    href={"#"}
+  >
+    {children}
+  </Link>
+);
+
+const MotionCenter = motion(Center);
+
+export default function Navbar() {
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const MotionBox = motion(Box);
+
+  const slideVerticalAnimation = {
+    open: {
+
+      y: 0,
+      opacity: 1,
+      transition: {
+        default: {duration: .5, type:"spring"},
+        opacity: {duration: 1},
+        mass: 1.3,
+        type: "spring",
+      },
+      display: "block",
+    },
+    close: {
+
+      y: -320,
+      opacity: 0,
+      transition: {
+        default: {duration: .3,},
+        opacity: {duration: .2},
+      },
+      transitionEnd: {
+        display: "none",
+      },
+    },
+  };
+
+  
+
   return (
-    <Flex
-      as="nav"
-      align="center"
-      justify="space-between"
-      wrap="wrap"
-      w="100%"
-      mb={8}
-      p={8}
-      bg={["primary.500", "primary.500", "transparent", "transparent"]}
-      color={["white", "white", "primary.700", "primary.700"]}
-      {...props}
-    >
-      {children}
-    </Flex>
+    <>
+      <Box width={"100%"} position={"absolute"} top={"90px"}>
+        <MotionCenter
+          initial="close"
+          animate={isOpen ? "open" : "close"}
+          variants={slideVerticalAnimation}
+          mx={"6rem"}
+          border={"5px solid black"}
+          bg={"white"}
+        >
+          <VStack>
+            <Box>asd</Box>
+            <Box>asd</Box>
+            <Box>asd</Box>
+          </VStack>
+        </MotionCenter>
+      </Box>
+      <Box px={{ base: "5", md: "40" }}>
+        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+          <BurgerButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+          <HStack spacing={8} alignItems={"center"}>
+            <Box>
+              <svg
+                height="40"
+                viewBox="0 0 122 122"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M60.4993 47.7395L85.6896 22.5394H98.4596V32.8693H89.9696L60.4993 62.3396L32.859 34.6993V98.4604H22.5389V22.5405H35.3089L60.4993 47.7395Z"
+                  fill="#263238"
+                />
+                <path
+                  d="M88.4302 41.6696L79.67 50.4298V56.5697H88.14V98.4585H98.46V41.6669L88.4302 41.6696Z"
+                  fill="#F7D147"
+                />
+                <path
+                  d="M117.178 3.83282H3.83289V117.178H117.178V3.83282Z"
+                  stroke="#263238"
+                  stroke-width="3.99197"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </Box>
+            <HStack
+              as={"nav"}
+              spacing={4}
+              display={{ base: "none", md: "flex" }}
+            >
+              {Links.map((link) => (
+                <NavLink key={link}>{link}</NavLink>
+              ))}
+            </HStack>
+          </HStack>
+        </Flex>
+      </Box>
+    </>
   );
-};
-
-export default Navbar;
+}
