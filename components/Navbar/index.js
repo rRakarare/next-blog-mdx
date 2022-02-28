@@ -1,27 +1,37 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
   Link,
-  IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useDisclosure,
   useColorModeValue,
-  Stack,
   VStack,
   Center,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
+import NextLink from 'next/link'
 
-const Links = ["Dashboard", "Projects", "Team"];
+
+const links = [
+  {text: "Modular One", href: "/"},
+  {text: "Kontakt", href: "/kontakt"},
+  {text: "Blog", href: "/blog"},
+]
+
+
+const Links = ({color}) => {
+  
+
+
+  return (
+    <>{links.map((link) => (
+      <NextLink href={link.href} passHref>
+      <Link color={color} key={link.text}>{link.text}</Link>
+      </NextLink>
+    ))}
+    </>
+  )
+}
 
 const Path = (props) => (
   <motion.path
@@ -33,16 +43,21 @@ const Path = (props) => (
   />
 );
 
+const MotionButton = motion(Box);
+
 const BurgerButton = ({ isOpen, onClick }) => {
-  const MotionButton = motion(Button);
+  
 
   return (
-    <motion.button
+    <MotionButton
+      _hover={{
+        cursor: "pointer"
+      }}
       className="menu-button"
       onClick={onClick}
       animate={isOpen ? "open" : "closed"}
       initial={false}
-      display={{ base: "none" }}
+      display={{ base: "block", md:"none" }}
     >
       <svg
         width="23"
@@ -71,24 +86,10 @@ const BurgerButton = ({ isOpen, onClick }) => {
           }}
         />
       </svg>
-    </motion.button>
+    </MotionButton>
   );
 };
 
-const NavLink = ({ children }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-    href={"#"}
-  >
-    {children}
-  </Link>
-);
 
 const MotionCenter = motion(Center);
 
@@ -105,20 +106,19 @@ export default function Navbar() {
       y: 0,
       opacity: 1,
       transition: {
-        default: {duration: .5, type:"spring"},
-        opacity: {duration: 1},
-        mass: 1.3,
-        type: "spring",
+        default: {duration: .4, type:"spring", mass: 0.5},
+        opacity: {duration: .4},
+
       },
       display: "block",
     },
     close: {
 
-      y: -320,
+      y: -200,
       opacity: 0,
       transition: {
         default: {duration: .3,},
-        opacity: {duration: .2},
+        opacity: {duration: .3},
       },
       transitionEnd: {
         display: "none",
@@ -130,19 +130,17 @@ export default function Navbar() {
 
   return (
     <>
-      <Box width={"100%"} position={"absolute"} top={"90px"}>
+      <Box display={{base:"block", md:"none"}} width={"100%"} position={"absolute"} top={"90px"}>
         <MotionCenter
           initial="close"
           animate={isOpen ? "open" : "close"}
           variants={slideVerticalAnimation}
           mx={"6rem"}
           border={"5px solid black"}
-          bg={"white"}
+          bg={"dark"}
         >
           <VStack>
-            <Box>asd</Box>
-            <Box>asd</Box>
-            <Box>asd</Box>
+            <Links color={"white"}/>
           </VStack>
         </MotionCenter>
       </Box>
@@ -150,7 +148,8 @@ export default function Navbar() {
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <BurgerButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>
+            <Box style={{cursor: "pointer"}}>
+              <NextLink  href={"/"}>
               <svg
                 height="40"
                 viewBox="0 0 122 122"
@@ -172,15 +171,14 @@ export default function Navbar() {
                   stroke-linecap="round"
                 />
               </svg>
+              </NextLink>
             </Box>
             <HStack
               as={"nav"}
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              <Links/>
             </HStack>
           </HStack>
         </Flex>
