@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
+import {authors} from '../../authors/authors'
 
 export default function Articel_Card({ thumbnail, post, index }) {
 
@@ -79,12 +80,12 @@ export default function Articel_Card({ thumbnail, post, index }) {
             <Stack p={6} direction={"row"} spacing={0} align={"center"} position="relative">
               <Avatar
                 mr={4}
-                src={"https://avatars0.githubusercontent.com/u/1164541?v=4"}
+                src={authors[post.frontMatter.author].avatar}
                 alt={"Author"}
               />
               <Stack direction={"column"} spacing={0} fontSize={"sm"}>
-                <Text fontWeight={600}>Achim Rolle</Text>
-                <Text color={"gray.500"}>Feb 08, 2021 · 6min read</Text>
+                <Text fontWeight={600}>{authors[post.frontMatter.author].name}</Text>
+                <Text color={"gray.500"}>{post.frontMatter.date} · {post.frontMatter.readTime}</Text>
               </Stack>
 
             </Stack>
