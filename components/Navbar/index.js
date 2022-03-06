@@ -25,7 +25,7 @@ const Links = ({color}) => {
 
   return (
     <>{links.map((link) => (
-      <NextLink href={link.href} passHref>
+      <NextLink href={link.href} passHref key={link.text}>
       <Link color={color} key={link.text}>{link.text}</Link>
       </NextLink>
     ))}
@@ -167,8 +167,8 @@ export default function Navbar() {
                 <path
                   d="M117.178 3.83282H3.83289V117.178H117.178V3.83282Z"
                   stroke="#263238"
-                  stroke-width="3.99197"
-                  stroke-linecap="round"
+                  strokeWidth="3.99197"
+                  strokeLinecap="round"
                 />
               </svg>
               </NextLink>

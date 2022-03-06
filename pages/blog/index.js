@@ -20,6 +20,7 @@ const blog = ({ posts }) => {
               thumbnail={post.frontMatter.thumbnailUrl}
               post={post}
               index={index}
+              key={index}
             />
           ))}
         </SimpleGrid>

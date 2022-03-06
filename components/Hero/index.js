@@ -58,7 +58,7 @@ export default function CallToActionWithAnnotation() {
             >
               <motion.path style={{stroke:"#263238", strokeWidth:"2"}}
                 stroke={"#119e2400"}
-                stroke-width={"20"}
+                strokeWidth={"20"}
                 id="Vector"
                 d="M60.4993 47.7395L85.6897 22.5394H98.4597V32.8693H89.9697L60.4993 62.3396L32.8591 34.6993V98.4604H22.539V22.5405H35.309L60.4993 47.7395Z"
 
