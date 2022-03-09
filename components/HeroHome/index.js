@@ -29,11 +29,11 @@ export default function HeroHome() {
       h={"100vh"}
       style={{
         zIndex: -1,
-        background: "linear-gradient(155deg, #ffffff 20%, #a5a3a3)",
+        background: "linear-gradient(50deg, #ffffff 20%, #a5a3a3)",
         marginTop: "-65px",
       }}
     >
-      <Canvas camera={{ position: [0, -10, 65], fov: 50 }} dpr={[1, 2]}>
+      <Canvas camera={{ position: [0, -2, 65], fov: 50 }} dpr={[1, 2]}>
         <pointLight position={[100, 100, 100]} intensity={0.8} />
         <hemisphereLight
           color="#ffffff"
