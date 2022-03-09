@@ -28,7 +28,7 @@ export default function HeroHome() {
       w={"100%"}
       h={"100vh"}
       style={{
-        zIndex: -10,
+        zIndex: -1,
         background: "linear-gradient(155deg, #ffffff 20%, #a5a3a3)",
         marginTop: "-65px",
       }}

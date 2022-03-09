@@ -144,7 +144,7 @@ export default function Navbar() {
           </VStack>
         </MotionCenter>
       </Box>
-      <Box style={{zIndex:10}} px={{ base: "5", md: "40" }}>
+      <Box style={{zIndex:10, position:"relative"}} px={{ base: "5", md: "40" }}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <BurgerButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
           <HStack spacing={8} alignItems={"center"}>
