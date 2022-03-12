@@ -1,34 +1,26 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  Box,
-  Flex,
-  HStack,
-  Link,
-  useColorModeValue,
-  VStack,
-  Center,
-} from "@chakra-ui/react";
+import { Box, Flex, HStack, VStack, Center } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import NextLink from "next/link";
-import styles from "./styles.module.css";
-import { toArray } from "@react-spring/shared";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const links = [
   { text: "Modular One", href: "/" },
   { text: "Kontakt", href: "/kontakt" },
   { text: "Blog", href: "/blog" },
+  { text: "Preise", href: "/preise" },
 ];
 
 const Dot = styled.div`
-  width: ${props => `${props.dims}px`};
-  height: ${props => `${props.dims}px`};
-  background: #F7D147;
+  width: ${(props) => `${props.dims}px`};
+  height: ${(props) => `${props.dims}px`};
+  background: #f7d147;
   position: absolute;
   border-radius: 0%;
   opacity: 0;
   bottom: -5px;
-  left: 222px;
+  left: ${(props) => `${-props.dims + 20 + 222}px`};
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 `;
@@ -41,27 +33,32 @@ const Anker = styled.a`
   font-weight: 500;
   padding: 0 20px 0 20px;
   display: inline-block;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: color 0.25s ease-in-out;
+  transition: color 0.25s ease-in-out;
   cursor: pointer;
 
   :hover {
-    color: #58656b;
+    color: #f7d147;
+  }
+  &.active {
+    color: #f7d147;
   }
 
   &:hover ~ ${Dot} {
     transform: ${(props) => {
-      console.log(props.widthParam);
-      return `translateX(${props.widthParam}px) rotate(${props.rotes * 180}deg)`;
+      return `translateX(${props.widthParam}px) rotate(${
+        props.rotes * 360
+      }deg)`;
     }};
 
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
     opacity: 1;
   }
+
 `;
 
-const Links = ({ mobile, items }) => {
+const Links = ({ mobile, items, router }) => {
   return mobile ? (
     <>
       {links.map((link) => (
@@ -74,7 +71,12 @@ const Links = ({ mobile, items }) => {
     <>
       {links.map((link, i) => (
         <NextLink href={link.href} key={link.text}>
-          <Anker rotes={i+1} widthParam={items.length > 0 && items[i]} key={link.text}>
+          <Anker
+            className={router.asPath == link.href ? "active" : ""}
+            rotes={i + 1}
+            widthParam={items.length > 0 && items[i]}
+            key={link.text}
+          >
             {link.text}
           </Anker>
         </NextLink>
@@ -144,25 +146,25 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [items, setItems] = useState([]);
 
+  const router = useRouter();
+
   const ref = useRef();
 
   useEffect(() => {
+    console.log(router.asPath);
+
     const itemset = [...ref.current.children]
       .filter((item) => item.nodeName === "A")
       .map((item) => item.offsetWidth);
 
-
     let finalItems = [];
-    itemset.forEach((item,i) => {
-      if (i>0) {
-        finalItems[i] = item /2  + finalItems[i-1] + itemset[i-1]/2
+    itemset.forEach((item, i) => {
+      if (i > 0) {
+        finalItems[i] = item / 2 + finalItems[i - 1] + itemset[i - 1] / 2;
       } else {
-        finalItems[i] = item / 2
+        finalItems[i] = item / 2;
       }
-      
-    console.log(finalItems)
-
-    })
+    });
 
     setItems(finalItems);
   }, []);
@@ -213,7 +215,7 @@ export default function Navbar() {
         >
           <VStack as={"nav"}>
             <Links mobile={true} />
-            <Dot dims={20}></Dot>
+            <Dot dims={10}></Dot>
           </VStack>
         </MotionCenter>
       </Box>
@@ -255,8 +257,8 @@ export default function Navbar() {
               spacing={0}
               display={{ base: "none", md: "flex" }}
             >
-              <Links items={items} />
-              <Dot dims={20}></Dot>
+              <Links router={router} items={items} />
+              <Dot dims={15}></Dot>
             </HStack>
           </HStack>
         </Flex>
