@@ -51,8 +51,8 @@ const Anker = styled.a`
       }deg)`;
     }};
 
-    -webkit-transition: all 0.25s ease-in-out;
-    transition: all 0.25s ease-in-out;
+    -webkit-transition: translateX 0.25s ease-in-out, rotate 0.25s ease-in-out opacity 0.25s ease-in-out;
+    transition: translateX 0.25s ease-in-out, rotate 0.25s ease-in-out opacity 0.25s ease-in-out;
     opacity: 1;
   }
 
