@@ -10,6 +10,7 @@ const links = [
   { text: "Modular One", href: "/" },
   { text: "Blog", href: "/blog" },
   { text: "Preise", href: "/preise" },
+  { text: "Kontakt", href: "/kontakt" },
 ];
 
 
