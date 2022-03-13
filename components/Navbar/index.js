@@ -2,77 +2,45 @@ import { useEffect, useRef, useState } from "react";
 import { Box, Flex, HStack, VStack, Center } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import NextLink from "next/link";
-import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useContainerDimensions } from "../../lib/refDimensions";
+import {Anker, AnkerMob, Dot} from "./styles"
 
 const links = [
   { text: "Modular One", href: "/" },
-  { text: "Kontakt", href: "/kontakt" },
   { text: "Blog", href: "/blog" },
   { text: "Preise", href: "/preise" },
 ];
 
-const Dot = styled.div`
-  width: ${(props) => `${props.dims}px`};
-  height: ${(props) => `${props.dims}px`};
-  background: #f7d147;
-  position: absolute;
-  border-radius: 0%;
-  opacity: 0;
-  bottom: -5px;
-  left: ${(props) => `${-props.dims + 20 + 222}px`};
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-`;
 
-const Anker = styled.a`
-  color: #263238;
-  text-decoration: none;
-  font-size: 1.2em;
-  text-transform: uppercase;
-  font-weight: 500;
-  padding: 0 20px 0 20px;
-  display: inline-block;
-  -webkit-transition: color 0.25s ease-in-out;
-  transition: color 0.25s ease-in-out;
-  cursor: pointer;
 
-  :hover {
-    color: #f7d147;
-  }
-  &.active {
-    color: #f7d147;
-  }
-
-  &:hover ~ ${Dot} {
-    transform: ${(props) => {
-      return `translateX(${props.widthParam}px) rotate(${
-        props.rotes * 360
-      }deg)`;
-    }};
-
-    -webkit-transition: translateX 0.25s ease-in-out, rotate 0.25s ease-in-out opacity 0.25s ease-in-out;
-    transition: translateX 0.25s ease-in-out, rotate 0.25s ease-in-out opacity 0.25s ease-in-out;
-    opacity: 1;
-  }
-
-`;
-
-const Links = ({ mobile, items, router }) => {
-  return mobile ? (
+const MobLinks = ({ router }) => {
+  const path = router && router.asPath;
+  return (
     <>
       {links.map((link) => (
         <NextLink href={link.href} key={link.text}>
-          <Anker key={link.text}>{link.text}</Anker>
+          <AnkerMob
+            className={path == link.href ? "active" : ""}
+            key={link.text}
+          >
+            {link.text}
+          </AnkerMob>
         </NextLink>
       ))}
     </>
-  ) : (
+  );
+};
+
+const Links = ({ items, router }) => {
+  const path = router && router.asPath;
+
+  return (
     <>
       {links.map((link, i) => (
         <NextLink href={link.href} key={link.text}>
           <Anker
-            className={router.asPath == link.href ? "active" : ""}
+            className={path == link.href ? "active" : ""}
             rotes={i + 1}
             widthParam={items.length > 0 && items[i]}
             key={link.text}
@@ -144,30 +112,14 @@ const MotionCenter = motion(Center);
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [items, setItems] = useState([]);
+
 
   const router = useRouter();
 
   const ref = useRef();
+  const dimensions = useContainerDimensions(ref)
 
-  useEffect(() => {
-    console.log(router.asPath);
 
-    const itemset = [...ref.current.children]
-      .filter((item) => item.nodeName === "A")
-      .map((item) => item.offsetWidth);
-
-    let finalItems = [];
-    itemset.forEach((item, i) => {
-      if (i > 0) {
-        finalItems[i] = item / 2 + finalItems[i - 1] + itemset[i - 1] / 2;
-      } else {
-        finalItems[i] = item / 2;
-      }
-    });
-
-    setItems(finalItems);
-  }, []);
 
   const slideVerticalAnimation = {
     open: {
@@ -214,8 +166,7 @@ export default function Navbar() {
           bg={"dark"}
         >
           <VStack as={"nav"}>
-            <Links mobile={true} />
-            <Dot dims={10}></Dot>
+            <MobLinks router={router} />
           </VStack>
         </MotionCenter>
       </Box>
@@ -257,7 +208,7 @@ export default function Navbar() {
               spacing={0}
               display={{ base: "none", md: "flex" }}
             >
-              <Links router={router} items={items} />
+              <Links router={router} items={dimensions} />
               <Dot dims={15}></Dot>
             </HStack>
           </HStack>

@@ -29,7 +29,7 @@ export default function HeroHome() {
       h={"100vh"}
       style={{
         zIndex: -1,
-        background: "linear-gradient(50deg, #ffffff 20%, #a5a3a3)",
+        background: "linear-gradient(90deg, #ffffff 20%, #a5a3a3)",
         marginTop: "-65px",
       }}
     >

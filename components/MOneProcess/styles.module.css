@@ -1,6 +1,10 @@
 .container > div > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: "yellow"
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: "yellow";
+}
+
+.container {
+  position: relative !important;
+}
