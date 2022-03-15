@@ -2,8 +2,14 @@ import * as THREE from "three";
 import React, { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { ContactShadows } from "@react-three/drei";
+import { Loader } from "@react-three/drei"
 import Model from "./Model";
 import { Box } from "@chakra-ui/react";
+
+function ZoomIn() {
+  const vec = new THREE.Vector3(0, -2, 65)
+  return useFrame(({ camera }) => camera.position.lerp(vec, 0.1))
+}
 
 function Rig({ children }) {
   const ref = useRef();
@@ -33,7 +39,7 @@ export default function HeroHome() {
         marginTop: "-65px",
       }}
     >
-      <Canvas camera={{ position: [0, -2, 65], fov: 50 }} dpr={[1, 2]}>
+      <Canvas camera={{ position: [0, -2, 1000], fov: 50 }} dpr={[1, 2]}>
         <pointLight position={[100, 100, 100]} intensity={0.8} />
         <hemisphereLight
           color="#ffffff"
@@ -44,6 +50,7 @@ export default function HeroHome() {
         <Suspense fallback={null}>
           <group position={[0, 10, 0]}>
             <Rig>
+              <ZoomIn/>
               <Model url="/compressed.glb" />
             </Rig>
             <ContactShadows
@@ -58,6 +65,8 @@ export default function HeroHome() {
           </group>
         </Suspense>
       </Canvas>
+      <Loader/>
+      
     </Box>
   );
 }
