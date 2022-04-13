@@ -3,6 +3,7 @@
 import { SimpleGrid, Container } from "@chakra-ui/react";
 import styled from "styled-components";
 import HeroHome from "../components/HeroHome"
+import Scene from "../components/House/Scene";
 import MOneProcess from "../components/MOneProcess";
 
 
@@ -16,6 +17,7 @@ export default function Home() {
     <>
     <HeroHome/>
     <MOneProcess/>
+    <Scene/>
     </>
   );
 }
