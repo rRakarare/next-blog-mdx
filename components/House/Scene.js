@@ -69,13 +69,13 @@ export default function Scene(props) {
       <Box>
         <VStack
           spacing={4}
-          align="stretch"
+
           p={10}
         >
-          <Box h="40px">
+
             <Heading>I'm a Heading</Heading>
-          </Box>
-          <Text color="gray.500">
+
+          <Text>
             Lorem ipsum is placeholder text commonly used in the graphic, print,
             and publishing industries for previewing layouts and visual mockups.
             in the graphic, print, and publishing industries for previewing
