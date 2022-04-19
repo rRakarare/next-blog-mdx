@@ -68,7 +68,6 @@ export default function Scene(props) {
       </Box>
       <Box>
         <VStack
-          divider={<StackDivider borderColor="gray.200" />}
           spacing={4}
           align="stretch"
           p={10}
