@@ -1,44 +1,64 @@
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
+import { useSpring, animated } from '@react-spring/three'
 
-export default function Model(props) {
+const map = [
+  { name: "wand_außen_fl", visible:false, mat: {color: "#403c3c", opacity_default:0.1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "wand_innen_fl", visible:true, mat: {color: "#736e6e", opacity_default:0.1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "wand_wire", visible:true, mat: {color: "#363434", opacity_default:0.1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "stairs", visible:true, mat: {color: "#868771", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "treppe_glas", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "treppe_geländer", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "door", visible:true, mat: {color: "#969696", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "og", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "og_fl", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "og_bottom_fl", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "dach_wire", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "dach_innen_fl", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "dach_außen_fl", visible:true, mat: {color: "#454141", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "geländer", visible:true, mat: {color: "#414141", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "geländer_glas", visible:true, mat: {color: "#4d5e76", opacity_default:0, opacity_inactive:.9, opacity_active: 1} },
+  { name: "säulen", visible:true, mat: {color: "#483e3e", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "window", visible:true, mat: {color: "#817c7c", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "window_glas", visible:true, mat: {color: "#4d5e76", roughness:.2, metallness:.8, opacity_default:.2, opacity_inactive:.9, opacity_active: 1} },
+  { name: "door_wire", visible:true, mat: {color: "#413c3c", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+  { name: "eg", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.9, opacity_active: 1} },
+];
+
+export default function Model({focus}) {
+
   const group = useRef();
-  const { nodes, materials } = useGLTF("/house.gltf");
+  const { nodes, materials } = useGLTF("/housev2.glb");
+
+
+  const arr = Object.values(nodes).filter((item) => item.type == "Mesh").filter(item=>item.name != "geländer_glas").filter(item=>item.name != "wand_innen_fl");
+
+
+  
+
   return (
-    <group ref={group} {...props} dispose={null}>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Mesh_house_type04.geometry}
-        material={materials.border}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Mesh_house_type04_1.geometry}
-        material={materials.door}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Mesh_house_type04_2.geometry}
-        material={materials.wndow}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Mesh_house_type04_3.geometry}
-      >
-        <meshStandardMaterial color={props.roofcolor} opacity={1} transparent/>
-      </mesh>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Mesh_house_type04_4.geometry}
-        material={materials.main}
-      />
+    <group ref={group} dispose={null}>
+      {arr.map((item,i) => <Obj focus={focus} key={i} item={item} /> )}
     </group>
   );
 }
 
-useGLTF.preload("/house.gltf");
+const Obj = ({item, focus}) => {
+
+  const obj = map.find((elem) => elem.name == item.name);
+  const mat = obj.mat
+
+  const springs = useSpring({
+    opacity: item.name == focus ? mat.opacity_active : (focus == null ? mat.opacity_default : mat.opacity_inactive),
+    color: item.name == focus ? "#32342d" : (focus == null ? mat.color : "#969595")
+  })
+
+
+  return (
+    <mesh visible={obj.visible} castShadow receiveShadow geometry={item.geometry} >
+     <animated.meshPhysicalMaterial color={springs.color} roughness={mat.roughness} metallness={mat.metallness} transparent opacity={springs.opacity}/>
+    </mesh>
+  );
+};
+
+useGLTF.preload("/housev2.glb");
