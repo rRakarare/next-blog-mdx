@@ -3,9 +3,9 @@ import { useGLTF } from "@react-three/drei";
 import { useSpring, animated } from '@react-spring/three'
 
 const map = [
-  { name: "wand_außen_fl", visible:true, mat: {color: "#403c3c", opacity_default:0.1, opacity_inactive:.3, opacity_active: 1} },
-  { name: "wand_innen_fl", visible:true, mat: {color: "#736e6e", opacity_default:0.1, opacity_inactive:.3, opacity_active: 1} },
-  { name: "wand_wire", visible:true, mat: {color: "#363434", opacity_default:0.1, opacity_inactive:.3, opacity_active: 1} },
+  { name: "wand_außen_fl", visible:true, mat: {color: "#403c3c", opacity_default:1, opacity_inactive:.3, opacity_active: 1} },
+  { name: "wand_innen_fl", visible:true, mat: {color: "#736e6e", opacity_default:1, opacity_inactive:.3, opacity_active: 1} },
+  { name: "wand_wire", visible:true, mat: {color: "#363434", opacity_default:1, opacity_inactive:.3, opacity_active: 1} },
   { name: "stairs", visible:true, mat: {color: "#868771", opacity_default:1, opacity_inactive:.3, opacity_active: 1} },
   { name: "treppe_glas", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.3, opacity_active: 1} },
   { name: "treppe_geländer", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.3, opacity_active: 1} },
@@ -20,7 +20,7 @@ const map = [
   { name: "geländer_glas", visible:true, mat: {color: "#4d5e76", opacity_default:0, opacity_inactive:.3, opacity_active: 1} },
   { name: "säulen", visible:true, mat: {color: "#483e3e", opacity_default:1, opacity_inactive:.3, opacity_active: 1} },
   { name: "window", visible:true, mat: {color: "#817c7c", opacity_default:1, opacity_inactive:.3, opacity_active: 1} },
-  { name: "window_glas", visible:true, mat: {color: "#4d5e76", roughness:.2, metallness:.8, opacity_default:.2, opacity_inactive:.3, opacity_active: 1} },
+  { name: "window_glas", visible:true, mat: {color: "#4d5e76", roughness:.1, metallness:1, opacity_default:.5, opacity_inactive:.3, opacity_active: 1} },
   { name: "door_wire", visible:true, mat: {color: "#413c3c", opacity_default:1, opacity_inactive:.3, opacity_active: 1} },
   { name: "eg", visible:true, mat: {color: "#ffffff", opacity_default:1, opacity_inactive:.3, opacity_active: 1} },
 ];
@@ -48,6 +48,8 @@ const Obj = ({item, focus}) => {
   const obj = map.find((elem) => elem.name == item.name);
   const mat = obj.mat
 
+  const wire = item.name != focus && focus!=null ? true : false
+
   const springs = useSpring({
     opacity: item.name == focus ? mat.opacity_active : (focus == null ? mat.opacity_default : mat.opacity_inactive),
     color: item.name == focus ? "#32342d" : (focus == null ? mat.color : "#969595")
@@ -56,7 +58,7 @@ const Obj = ({item, focus}) => {
 
   return (
     <mesh visible={obj.visible} castShadow receiveShadow geometry={item.geometry} >
-     <animated.meshPhysicalMaterial color={springs.color} roughness={mat.roughness} metallness={mat.metallness} transparent opacity={springs.opacity}/>
+     <animated.meshPhysicalMaterial color={springs.color} roughness={mat.roughness} depthWrite={true} wireframe={wire} metallness={mat.metallness} transparent opacity={springs.opacity}/>
     </mesh>
   );
 };

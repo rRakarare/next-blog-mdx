@@ -63,7 +63,7 @@ export default function Scene(props) {
             <Environment preset="sunset" />
             <Model focus={focus} />
           </Suspense>
-          <OrbitControls ref={ref} />
+          <OrbitControls autoRotate ref={ref} />
         </Canvas>
       </Box>
       <Box>
