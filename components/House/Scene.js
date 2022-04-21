@@ -23,9 +23,15 @@ import Model from "./Model";
 import { FaHome } from "react-icons/fa";
 import { GiBrickWall, GiStairs } from "react-icons/gi";
 import { MdRoofing } from "react-icons/md";
+import { motion } from "framer-motion";
 
 export default function Scene(props) {
   const [focus, setFocus] = useState(null);
+
+  const variants = {
+    open: { opacity: 1 , y:0},
+    closed: { opacity: 0 , y:"30px"},
+  };
 
   const ref = useRef();
   return (
@@ -67,21 +73,80 @@ export default function Scene(props) {
         </Canvas>
       </Box>
       <Box>
-        <VStack
-          spacing={4}
-          align="stretch"
-          p={10}
-        >
-          <Box h="40px">
-            <Heading>Im a Heading</Heading>
+        <Box position={"relative"}>
+          <Box
+            position={"absolute"}
+            as={motion.div}
+            variants={variants}
+            animate={focus === null ? "open" : "closed"}
+          >
+            <VStack spacing={4} align="stretch" p={10}>
+              <Box h="40px">
+                <Heading>M1 App</Heading>
+              </Box>
+              <Text color="gray.500">
+                Ganz klasse. Lorem ipsum is placeholder text commonly used in the graphic,
+                print, and publishing industries for previewing layouts and
+                visual mockups. in the graphic, print, and publishing industries
+                for previewing layouts and visual mockups.
+              </Text>
+            </VStack>
           </Box>
-          <Text color="gray.500">
-            Lorem ipsum is placeholder text commonly used in the graphic, print,
-            and publishing industries for previewing layouts and visual mockups.
-            in the graphic, print, and publishing industries for previewing
-            layouts and visual mockups.
-          </Text>
-        </VStack>
+          <Box
+            position={"absolute"}
+            as={motion.div}
+            variants={variants}
+            animate={focus === "dach_außen_fl" ? "open" : "closed"}
+          >
+            <VStack spacing={4} align="stretch" p={10}>
+              <Box h="40px">
+                <Heading>Dachflächen</Heading>
+              </Box>
+              <Text color="gray.500">
+                Strom Sonne für die Dach un so. Lorem ipsum is placeholder text commonly used in the graphic,
+                print, and publishing industries for previewing layouts and
+                visual mockups. in the graphic, print, and publishing industries
+                for previewing layouts and visual mockups.
+              </Text>
+            </VStack>
+          </Box>
+          <Box
+            position={"absolute"}
+            as={motion.div}
+            variants={variants}
+            animate={focus === "wand_außen_fl" ? "open" : "closed"}
+          >
+            <VStack spacing={4} align="stretch" p={10}>
+              <Box h="40px">
+                <Heading>Außenwand</Heading>
+              </Box>
+              <Text color="gray.500">
+                Putz neu und das alles Lorem ipsum is placeholder text commonly used in the graphic,
+                print, and publishing industries for previewing layouts and
+                visual mockups. in the graphic, print, and publishing industries
+                for previewing layouts and visual mockups.
+              </Text>
+            </VStack>
+          </Box>
+          <Box
+            position={"absolute"}
+            as={motion.div}
+            variants={variants}
+            animate={focus === "og_fl" ? "open" : "closed"}
+          >
+            <VStack spacing={4} align="stretch" p={10}>
+              <Box h="40px">
+                <Heading>Boden OG</Heading>
+              </Box>
+              <Text color="gray.500">
+                Neue Fließen Lorem ipsum is placeholder text commonly used in the graphic,
+                print, and publishing industries for previewing layouts and
+                visual mockups. in the graphic, print, and publishing industries
+                for previewing layouts and visual mockups.
+              </Text>
+            </VStack>
+          </Box>
+        </Box>
       </Box>
     </SimpleGrid>
   );
