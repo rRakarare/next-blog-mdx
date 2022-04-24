@@ -35,7 +35,7 @@ export default function Scene(props) {
 
   const ref = useRef();
   return (
-    <SimpleGrid columns={2} spacing={10}>
+    <SimpleGrid  columns={[1, 1, 1,2]} spacing={10}>
       <Box
         justifyContent={"center"}
         display={"flex"}
@@ -69,11 +69,11 @@ export default function Scene(props) {
             <Environment preset="sunset" />
             <Model focus={focus} />
           </Suspense>
-          <OrbitControls autoRotate ref={ref} />
+          <OrbitControls enableZoom={false} maxPolarAngle={2} rotateSpeed={.4} autoRotateSpeed={.6} autoRotate ref={ref} />
         </Canvas>
       </Box>
       <Box>
-        <Box position={"relative"}>
+        <Box h={300} position={"relative"}>
           <Box
             position={"absolute"}
             as={motion.div}
