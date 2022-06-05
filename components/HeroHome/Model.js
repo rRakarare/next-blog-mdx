@@ -12,7 +12,7 @@ export default function Model({ url, ...props }) {
   const { nodes, materials } = useGLTF("/m1.glb");
   useFrame((state) => {
     group.current.children.forEach((child, index) => {
-      child.position.y += Math.sin(index * 1000 + state.clock.elapsedTime) / 50;
+      child.position.y += Math.sin(index * 1 + state.clock.elapsedTime) / 100;
       child.rotation.x +=
         (Math.sin(index * 1000 + state.clock.elapsedTime) * Math.PI) / 2000;
       child.rotation.y +=
@@ -31,7 +31,7 @@ export default function Model({ url, ...props }) {
         >
           <meshPhongMaterial
             attach="material"
-            color="#FFFFFF"
+            color="#d3d1d1"
             opacity={1}
             transparent
           />

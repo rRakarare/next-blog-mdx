@@ -27,6 +27,7 @@ import { motion } from "framer-motion";
 
 export default function Scene(props) {
   const [focus, setFocus] = useState(null);
+  const [state, setState] = useState(null);
 
   const variants = {
     open: { opacity: 1 , y:0},
@@ -45,16 +46,16 @@ export default function Scene(props) {
       >
         <Box position={"absolute"} top={10} zIndex={10}>
           <HStack>
-            <Button onClick={() => setFocus(null)}>
+            <Button onClick={() => {setFocus(null), setState(null)}}>
               <Icon as={FaHome} />
             </Button>
-            <Button onClick={() => setFocus("dach_außen_fl")}>
+            <Button onClick={() => {setFocus(["dach_außen_fl", "dach_wire"]), setState(1)}}>
               <Icon as={MdRoofing} />
             </Button>
-            <Button onClick={() => setFocus("wand_außen_fl")}>
+            <Button onClick={() => {setFocus(["wand_außen_fl"]),setState(2)}}>
               <Icon as={GiBrickWall} />
             </Button>
-            <Button onClick={() => setFocus("og_fl")}>
+            <Button onClick={() => {setFocus(["og_fl", "og", "eg"]), setState(3)}}>
               <Icon as={GiStairs} />
             </Button>
           </HStack>
@@ -78,7 +79,7 @@ export default function Scene(props) {
             position={"absolute"}
             as={motion.div}
             variants={variants}
-            animate={focus === null ? "open" : "closed"}
+            animate={state === null ? "open" : "closed"}
           >
             <VStack spacing={4} align="stretch" p={10}>
               <Box h="40px">
@@ -96,7 +97,7 @@ export default function Scene(props) {
             position={"absolute"}
             as={motion.div}
             variants={variants}
-            animate={focus === "dach_außen_fl" ? "open" : "closed"}
+            animate={state === 1 ? "open" : "closed"}
           >
             <VStack spacing={4} align="stretch" p={10}>
               <Box h="40px">
@@ -114,7 +115,7 @@ export default function Scene(props) {
             position={"absolute"}
             as={motion.div}
             variants={variants}
-            animate={focus === "wand_außen_fl" ? "open" : "closed"}
+            animate={state === 2 ? "open" : "closed"}
           >
             <VStack spacing={4} align="stretch" p={10}>
               <Box h="40px">
@@ -132,7 +133,7 @@ export default function Scene(props) {
             position={"absolute"}
             as={motion.div}
             variants={variants}
-            animate={focus === "og_fl" ? "open" : "closed"}
+            animate={state === 3 ? "open" : "closed"}
           >
             <VStack spacing={4} align="stretch" p={10}>
               <Box h="40px">

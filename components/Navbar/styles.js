@@ -17,7 +17,6 @@ export const Anker = styled.a`
   color: #263238;
   text-decoration: none;
   font-size: 1.2em;
-  text-transform: uppercase;
   font-weight: 500;
   padding: 0 20px 0 20px;
   display: inline-block;
