@@ -14,7 +14,7 @@ export const Dot = styled.div`
 `;
 
 export const Anker = styled.a`
-  color: #263238;
+  color: ${(props) => {props.textcolor}};
   text-decoration: none;
   font-size: 1.2em;
   font-weight: 500;

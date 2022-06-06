@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Box, Flex, HStack, VStack, Center } from "@chakra-ui/react";
+import { Box, Flex, HStack, VStack, Center, useColorMode } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -8,6 +8,7 @@ import {Anker, AnkerMob, Dot} from "./styles"
 
 const links = [
   { text: "Modular One", href: "/" },
+  { text: "Leistungen", href: "/leistungen" },
   { text: "Blog", href: "/blog" },
   { text: "Preise", href: "/preise" },
   { text: "Kontakt", href: "/kontakt" },
@@ -35,6 +36,7 @@ const MobLinks = ({ router }) => {
 
 const Links = ({ items, router }) => {
   const path = router && router.asPath;
+  const { colorMode, toggleColorMode } = useColorMode()
 
   return (
     <>
@@ -45,6 +47,7 @@ const Links = ({ items, router }) => {
             rotes={i + 1}
             widthParam={items.length > 0 && items[i]}
             key={link.text}
+            textcolor = {colorMode === "light" ? "black": "white"}
           >
             {link.text}
           </Anker>
@@ -113,6 +116,7 @@ const MotionCenter = motion(Center);
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { colorMode, toggleColorMode } = useColorMode()
 
 
   const router = useRouter();
@@ -188,7 +192,7 @@ export default function Navbar() {
                 >
                   <path
                     d="M60.4993 47.7395L85.6896 22.5394H98.4596V32.8693H89.9696L60.4993 62.3396L32.859 34.6993V98.4604H22.5389V22.5405H35.3089L60.4993 47.7395Z"
-                    fill="#263238"
+                    fill={colorMode === "light" ? "#263238" : "white"}
                   />
                   <path
                     d="M88.4302 41.6696L79.67 50.4298V56.5697H88.14V98.4585H98.46V41.6669L88.4302 41.6696Z"
@@ -196,7 +200,7 @@ export default function Navbar() {
                   />
                   <path
                     d="M117.178 3.83282H3.83289V117.178H117.178V3.83282Z"
-                    stroke="#263238"
+                    stroke={colorMode === "light" ? "#263238" : "white"}
                     strokeWidth="3.99197"
                     strokeLinecap="round"
                   />
