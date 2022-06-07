@@ -23,7 +23,6 @@ function MyApp({ Component, pageProps }) {
         <Navbar />
         <Component {...pageProps} />
         <Footer />
-        <DarkModeCheck/>
       </ChakraProvider>
     </>
   );

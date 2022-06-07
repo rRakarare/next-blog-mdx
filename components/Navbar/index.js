@@ -5,6 +5,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useContainerDimensions } from "../../lib/refDimensions";
 import {Anker, AnkerMob, Dot} from "./styles"
+import DarkModeCheck from "../DarkModeCheck";
 
 const links = [
   { text: "Modular One", href: "/" },
@@ -216,6 +217,7 @@ export default function Navbar() {
               <Links router={router} items={dimensions} />
               <Dot dims={15}></Dot>
             </HStack>
+            <DarkModeCheck/>
           </HStack>
         </Flex>
       </Box>
