@@ -3,20 +3,6 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-const Trigger = ({ children }) => {
-
-  const [ref, inView] = useInView({ threshold: 1 });
-
-  useEffect(() => {
-    if (inView) {
-      console.log("visible");
-    } else {
-      console.log("hidden");
-    }
-  }, [inView]);
-
-  return <div ref={ref}></div>
-}
 
 
 const Boxer = ({ children }) => {
@@ -48,7 +34,25 @@ const Boxer = ({ children }) => {
   );
 };
 
-const SingleLeistung = ({ FOR, HEAD, DESC, TEXT }) => {
+const SingleLeistung = ({ FOR, HEAD, DESC, TEXT, Number, IMG }) => {
+
+  const boxVariant = {
+    visible: { opacity: 1 },
+    hidden: { opacity: 0 },
+  };
+
+  const control = useAnimation();
+
+  const [ref, inView] = useInView({ threshold: 1 });
+
+  useEffect(() => {
+    if (inView) {
+      control.start("visible");
+    } else {
+      control.start("hidden");
+    }
+  }, [inView]);
+
   return (
     <>
     <SimpleGrid columns={2} w={"100%"}>
@@ -74,11 +78,14 @@ const SingleLeistung = ({ FOR, HEAD, DESC, TEXT }) => {
               Für | {TEXT}
             </Text>
           </Boxer>
-          <Trigger/>
+          <Box marginTop={"20px!important"} marginBottom={"60vh!important"} background={"red"} height={"1px"} w={"200px"} ref={ref}></Box>
         </VStack>
       </Box>
-      <Box >
-        <Image src='test.jpg' alt='Dan Abramov' objectFit={"cover"} position={"fixed"} right={0} top={0} height={"100vh"} width={"100vh"}/>
+      <Box      as={motion.div}
+      variants={boxVariant}
+      initial="hidden"
+      animate={control} >
+        {inView ? <Image src={`/${IMG}.jpg`} alt='Dan Abramov' objectFit={"cover"} position={"fixed"} right={0} top={0} height={"100vh"} width={"50vw"}/>: null}
       </Box>
       </SimpleGrid>
     </>

@@ -6,7 +6,7 @@ const leistungen = () => {
 
   return (
     <>
-      <VStack marginTop={"20rem"} marginLeft={"20rem"} spacing={"70vh"} align={"flex-start"}>
+      <VStack marginTop={"20rem"} marginLeft={"20rem"} align={"flex-start"}>
         <SingleLeistung
           FOR={"Lappens"}
           HEAD="Elo Gainer"
@@ -16,24 +16,32 @@ const leistungen = () => {
           TEXT={
             "I'm baby deep v mixtape tote bag, listicle salvia quinoa vice +1 freegan. Shaman leggings vape tousled lyft meditation, brooklyn 3 wolf moon."
           }
+          Number={1}
+          IMG="test"
         />
         <SingleLeistung
           FOR={"asd"}
           HEAD="Head"
           DESC={"lorem ipsum"}
           TEXT={"dsaadsdasadsdsa"}
+          Number={2}
+          IMG="test2"
         />
         <SingleLeistung
           FOR={"asd"}
           HEAD="Head"
           DESC={"lorem ipsum"}
           TEXT={"dsaadsdasadsdsa"}
+          Number={3}
+          IMG="test3"
         />
         <SingleLeistung
           FOR={"asd"}
           HEAD="Head"
           DESC={"lorem ipsum"}
           TEXT={"dsaadsdasadsdsa"}
+          Number={4}
+          IMG="test4"
         />
       </VStack>
     </>
