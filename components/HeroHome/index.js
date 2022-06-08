@@ -4,7 +4,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { ContactShadows } from "@react-three/drei";
 import { Loader } from "@react-three/drei";
 import Model from "./Model";
-import { Box, Center, Heading, Text, useColorMode } from "@chakra-ui/react";
+import { Box, Center, Heading, Text, useColorMode, useTheme } from "@chakra-ui/react";
 
 function ZoomIn() {
   const vec = new THREE.Vector3(0, -2, 65);
@@ -30,8 +30,11 @@ function Rig({ children }) {
 
 export default function HeroHome() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const theme = useTheme()
 
-  const grad = colorMode === "light" ? "linear-gradient(90deg, #ffffff 20%, #a5a3a3)" : "linear-gradient(90deg, #2C2C2C 20%, #5E5E5E)"
+  console.log("theme", theme)
+
+  const grad = colorMode === "light" ? "linear-gradient(90deg, #ffffff 20%, #a5a3a3)" : `linear-gradient(60deg, ${theme.colors.dark2} 50%, #848484)`
 
   return (
     <Box w={"100%"} h={"100vh"} position={"relative"}>

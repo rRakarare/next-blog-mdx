@@ -1,7 +1,23 @@
-import { Box, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Heading, Image, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+
+const Trigger = ({ children }) => {
+
+  const [ref, inView] = useInView({ threshold: 1 });
+
+  useEffect(() => {
+    if (inView) {
+      console.log("visible");
+    } else {
+      console.log("hidden");
+    }
+  }, [inView]);
+
+  return <div ref={ref}></div>
+}
+
 
 const Boxer = ({ children }) => {
   const boxVariant = {
@@ -35,6 +51,7 @@ const Boxer = ({ children }) => {
 const SingleLeistung = ({ FOR, HEAD, DESC, TEXT }) => {
   return (
     <>
+    <SimpleGrid columns={2} w={"100%"}>
       <Box w={"500px"}>
         <VStack align={"flex-start"}>
           <Boxer>
@@ -57,8 +74,13 @@ const SingleLeistung = ({ FOR, HEAD, DESC, TEXT }) => {
               Für | {TEXT}
             </Text>
           </Boxer>
+          <Trigger/>
         </VStack>
       </Box>
+      <Box >
+        <Image src='test.jpg' alt='Dan Abramov' objectFit={"cover"} position={"fixed"} right={0} top={0} height={"100vh"} width={"100vh"}/>
+      </Box>
+      </SimpleGrid>
     </>
   );
 };
