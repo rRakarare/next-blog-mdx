@@ -1,9 +1,15 @@
-import { Box, Heading, Image, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Heading,
+  Image,
+  SimpleGrid,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-
-
 
 const Boxer = ({ children }) => {
   const boxVariant = {
@@ -28,17 +34,32 @@ const Boxer = ({ children }) => {
       variants={boxVariant}
       initial="hidden"
       animate={control}
+      transitionDuration={1}
     >
       {children}
     </Box>
   );
 };
 
-const SingleLeistung = ({ FOR, HEAD, DESC, TEXT, Number, IMG }) => {
-
+const SingleLeistung = ({
+  FOR,
+  HEAD,
+  DESC,
+  TEXT,
+  Number,
+  IMG,
+  IMG_IN,
+  currentSlide,
+  changeSlide,
+}) => {
   const boxVariant = {
-    visible: { opacity: 1 },
-    hidden: { opacity: 0 },
+    visible: { translateY: "0px", transition: { duration: 1 } },
+    hidden: { translateY: "100vh", transition: { duration: 1 } },
+  };
+
+  const inVariant = {
+    visible: {translateY: "0px", opacity: 1, transition: { duration: 1.2, delay: .2 } },
+    hidden: { translateY: "100vh",opacity: 0, transition: { duration: 1.2, delay: .2 } },
   };
 
   const control = useAnimation();
@@ -47,46 +68,98 @@ const SingleLeistung = ({ FOR, HEAD, DESC, TEXT, Number, IMG }) => {
 
   useEffect(() => {
     if (inView) {
+      changeSlide(Number);
       control.start("visible");
-    } else {
+    } else if (currentSlide === Number - 1) {
       control.start("hidden");
     }
   }, [inView]);
 
   return (
     <>
-    <SimpleGrid columns={2} w={"100%"}>
-      <Box w={"500px"}>
-        <VStack align={"flex-start"}>
-          <Boxer>
-            <Text fontWeight={"medium"} fontSize={"large"}>
-              Für | {FOR}
-            </Text>
-          </Boxer>
-          <Boxer>
-            <Heading marginBottom={"1rem"} color={"red"} fontWeight={"bold"} fontSize={"7xl"}>
-              {HEAD}
-            </Heading>
-          </Boxer>
-          <Boxer>
-            <Text marginBottom={"1.4rem"} fontWeight={"medium"} fontSize={"2xl"}>
-              Für | {DESC}
-            </Text>
-          </Boxer>
-          <Boxer>
-            <Text fontWeight={"medium"} fontSize={"md"}>
-              Für | {TEXT}
-            </Text>
-          </Boxer>
-          <Box marginTop={"20px!important"} marginBottom={"60vh!important"} background={"red"} height={"1px"} w={"200px"} ref={ref}></Box>
-        </VStack>
-      </Box>
-      <Box      as={motion.div}
-      variants={boxVariant}
-      initial="hidden"
-      animate={control} >
-        {inView ? <Image src={`/${IMG}.jpg`} alt='Dan Abramov' objectFit={"cover"} position={"fixed"} right={0} top={0} height={"100vh"} width={"50vw"}/>: null}
-      </Box>
+      <SimpleGrid columns={2} w={"100%"}>
+        <Box w={"500px"}>
+          <VStack align={"flex-start"}>
+            <Boxer>
+              <Text fontWeight={"medium"} fontSize={"large"}>
+                Für | {FOR}
+              </Text>
+            </Boxer>
+            <Boxer>
+              <Heading
+                marginBottom={"1rem"}
+                color={"red"}
+                fontWeight={"bold"}
+                fontSize={"7xl"}
+              >
+                {HEAD}
+              </Heading>
+            </Boxer>
+            <Boxer>
+              <Text
+                marginBottom={"1.4rem"}
+                fontWeight={"medium"}
+                fontSize={"2xl"}
+              >
+                Für | {DESC}
+              </Text>
+            </Boxer>
+            <Boxer>
+              <Text fontWeight={"medium"} fontSize={"md"}>
+                Für | {TEXT}
+              </Text>
+            </Boxer>
+            <Box
+              marginTop={"20px!important"}
+              marginBottom={"60vh!important"}
+              background={"red"}
+              height={"1px"}
+              w={"200px"}
+              ref={ref}
+            ></Box>
+          </VStack>
+        </Box>
+        <Center justifyContent={"center"} alignItems={"center"}>
+          <Box
+            as={motion.div}
+            variants={boxVariant}
+            initial="hidden"
+            animate={control}
+            position={"fixed"}
+            right={0}
+            top={0}
+            height={"100vh"}
+            width={"50vw"}
+          >
+            <Image
+              src={`/${IMG}.jpg`}
+              alt="Dan Abramov"
+              width={"100%"}
+              height={"100%"}
+              objectFit={"cover"}
+            />
+          </Box>
+          <Box
+            as={motion.div}
+            variants={inVariant}
+            initial="hidden"
+            animate={control}
+            top={"calc(50vh - 200px)"}
+            right={"calc(25vw - 200px)"}
+            position={"fixed"}
+            background={"red"}
+            w={"400px"}
+            h={"400px"}
+          >
+            <Image
+              src={`/${IMG_IN}.jpg`}
+              alt="Dan Abramov"
+              width={"100%"}
+              height={"100%"}
+              objectFit={"cover"}
+            />
+          </Box>
+        </Center>
       </SimpleGrid>
     </>
   );
