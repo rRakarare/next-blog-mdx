@@ -51,15 +51,16 @@ const SingleLeistung = ({
   IMG_IN,
   currentSlide,
   changeSlide,
+  fading
 }) => {
   const boxVariant = {
-    visible: { translateY: "0px", transition: { duration: 1 } },
-    hidden: { translateY: "100vh", transition: { duration: 1 } },
+    visible: { translateY: "0px", transition: { duration: .65 } },
+    hidden: { translateY: "100vh", transition: { duration: .65, delay: .1 } },
   };
 
   const inVariant = {
-    visible: {translateY: "0px", opacity: 1, transition: { duration: 1.2, delay: .2 } },
-    hidden: { translateY: "100vh",opacity: 0, transition: { duration: 1.2, delay: .2 } },
+    visible: {translateY: "0px", opacity: 1, transition: {translateY: { duration: .7, delay: .1 }, opacity: { duration: .7, delay: .3 }} },
+    hidden: { translateY: "100vh",opacity: 0, transition: {translateY: { duration: .7, delay: 0 }, opacity: { duration: .4, delay: 0 }} },
   };
 
   const control = useAnimation();
@@ -67,13 +68,22 @@ const SingleLeistung = ({
   const [ref, inView] = useInView({ threshold: 1 });
 
   useEffect(() => {
-    if (inView) {
+    if (inView && Number > currentSlide) {
       changeSlide(Number);
-      control.start("visible");
-    } else if (currentSlide === Number - 1) {
-      control.start("hidden");
+    } else if (Number === currentSlide) {
+      changeSlide(Number-1)
     }
   }, [inView]);
+
+
+  useEffect(() => {
+    console.log(currentSlide)
+    if (inView && fading) {
+      control.start("visible");
+    } else if (currentSlide === Number -1 || !fading) {
+      control.start("hidden");
+    }
+  }, [currentSlide, fading]);
 
   return (
     <>
