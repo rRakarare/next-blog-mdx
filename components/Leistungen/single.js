@@ -88,7 +88,7 @@ const SingleLeistung = ({
   return (
     <>
       <SimpleGrid columns={2} w={"100%"}>
-        <Box w={"500px"}>
+        <Box w={"100%"} paddingX={"14rem"}>
           <VStack align={"flex-start"}>
             <Boxer>
               <Text fontWeight={"medium"} fontSize={"large"}>

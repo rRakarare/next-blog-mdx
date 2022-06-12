@@ -1,6 +1,16 @@
-import { Box, Center, HStack, Text, useColorMode, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  HStack,
+  SimpleGrid,
+  Text,
+  useColorMode,
+  VStack,
+} from "@chakra-ui/react";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 import { useEffect, useState } from "react";
+import Counter from "../../components/Leistungen/counter";
+import FrontText from "../../components/Leistungen/frontText";
 import SingleLeistung from "../../components/Leistungen/single";
 
 const Leistungen = () => {
@@ -29,45 +39,15 @@ const Leistungen = () => {
 
   return (
     <>
-      <Box
-        position={"fixed"}
-        top={"100px"}
-        left={"100px"}
-        w={"100px"}
-        h={"100px"}
-      >
-        <Center
-          position={"fixed"}
-          top={"100px"}
-          left={"100px"}
-          w={"100px"}
-          h={"100px"}
-        >
-          <Text fontWeight={"semibold"} fontSize={"5xl"} marginBottom={"10px"}>
-          {currentSlide}
-          </Text>
-        </Center>
-        <svg
-          width="100"
-          height="100"
-          viewBox="0 0 110 110"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M14.5 4.5H93.5C98.7467 4.5 103 8.7533 103 14V93C103 98.2467 98.7467 102.5 93.5 102.5H14.5C9.2533 102.5 5 98.2467 5 93V14C5 8.7533 9.2533 4.5 14.5 4.5Z"
-            stroke={colorMode === "dark" ? "#47474741" : "#d6d6d67c"}
-            strokeWidth="9"
-          />
-          <motion.path
-            d="M14.5 4.5H93.5C98.7467 4.5 103 8.7533 103 14V93C103 98.2467 98.7467 102.5 93.5 102.5H14.5C9.2533 102.5 5 98.2467 5 93V14C5 8.7533 9.2533 4.5 14.5 4.5Z"
-            stroke={colorMode === "dark" ? "white" : "black"}
-            strokeWidth="9"
-            style={{ pathLength: scrollYProgress }}
-          />
-        </svg>
-      </Box>
-      <VStack marginTop={"20rem"} marginLeft={"20rem"} align={"flex-start"}>
+      <SimpleGrid columns={2} h={"100vh"}>
+        <Center justifyContent={"center"} alignItems={"center"}><FrontText /></Center>
+        <Center justifyContent={"center"} alignItems={"center"}><Text>Scroll Down</Text></Center>
+        
+        
+      </SimpleGrid>
+      <Counter currentSlide={currentSlide} />
+
+      <VStack justifyContent={"center"}>
         <SingleLeistung
           FOR={"Lappens"}
           HEAD="Elo Gainer"
