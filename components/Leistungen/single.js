@@ -56,11 +56,15 @@ const SingleLeistung = ({
   const boxVariant = {
     visible: { translateY: "0px", transition: { duration: .65 } },
     hidden: { translateY: "100vh", transition: { duration: .65, delay: .1 } },
+    fadeout: {opacity: 0},
+    fadein: {opacity: 1}
   };
 
   const inVariant = {
     visible: {translateY: "0px", opacity: 1, transition: {translateY: { duration: .7, delay: .1 }, opacity: { duration: .7, delay: .3 }} },
     hidden: { translateY: "100vh",opacity: 0, transition: {translateY: { duration: .7, delay: 0 }, opacity: { duration: .4, delay: 0 }} },
+    fadeout: {opacity: 0},
+    fadein: {opacity: 1}
   };
 
   const control = useAnimation();
@@ -77,13 +81,22 @@ const SingleLeistung = ({
 
 
   useEffect(() => {
+    if (fading) {
+      control.start("fadeout");
+    } else  {
+      control.start("fadein");
+    }
+  }, [fading]);
+
+
+  useEffect(() => {
     console.log(currentSlide)
-    if (inView && fading) {
+    if (inView) {
       control.start("visible");
-    } else if (currentSlide === Number -1 || !fading) {
+    } else if (currentSlide === Number -1) {
       control.start("hidden");
     }
-  }, [currentSlide, fading]);
+  }, [currentSlide]);
 
   return (
     <>

@@ -7,43 +7,80 @@ import {
   useColorMode,
   VStack,
 } from "@chakra-ui/react";
-import { motion, useTransform, useViewportScroll } from "framer-motion";
+import { motion, useAnimation, useTransform, useViewportScroll } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import Counter from "../../components/Leistungen/counter";
 import FrontText from "../../components/Leistungen/frontText";
 import SingleLeistung from "../../components/Leistungen/single";
 
 const Leistungen = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [fading, setFading] = useState(false);
-  const { scrollYProgress } = useViewportScroll();
   const { colorMode, toggleColorMode } = useColorMode();
+  const [ref, inView] = useInView({ threshold: 1 });
 
-  useEffect(() => {
-    scrollYProgress.onChange((latest) => {
-      if (latest > 0) {
-        setFading(true);
-      } else {
-        setFading(false);
-      }
-      // console.log(latest);
-    });
-  }, []);
-  useEffect(() => {
-    console.log(fading);
-  }, [fading]);
+  const control = useAnimation();
 
   const changeSlide = (val) => {
     setCurrentSlide(val);
   };
 
+  const arrowVariant = {
+    normal: {translateY:0},
+    hover: {translateY:"80px"}
+  }
+  const stickVariant = {
+    normal: {scaleY:1, translateY:0},
+    hover: {scaleY:3, translateY:"50px"}
+  }
+
   return (
     <>
       <SimpleGrid columns={2} h={"100vh"}>
-        <Center justifyContent={"center"} alignItems={"center"}><FrontText /></Center>
-        <Center justifyContent={"center"} alignItems={"center"}><Text>Scroll Down</Text></Center>
-        
-        
+        <Center justifyContent={"center"} alignItems={"center"}>
+          <FrontText />
+        </Center>
+        <VStack justifyContent={"center"} alignItems={"center"}>
+          <Box cursor={"pointer"} onMouseEnter={()=>control.start("hover")} onMouseLeave={()=>control.start("normal")}>
+            
+
+          
+            <VStack justifyContent={"center"} alignItems={"center"}>
+              <Box id="stick" as={motion.div} initial="normal" animate={control} variants={stickVariant}>
+                <svg
+                  width="11"
+                  height="56"
+                  viewBox="0 0 11 56"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <line
+                    x1="5.5"
+                    y1="2.40413e-07"
+                    x2="5.5"
+                    y2="56"
+                    stroke={colorMode==="dark" ? "white" : "black"}
+                    stroke-width="11"
+                  />
+                </svg>
+              </Box>
+              <Box id="arrow" as={motion.div} initial="normal" animate={control} variants={arrowVariant} marginTop={"-2px!important"}>
+                <svg
+                  width="50"
+                  height="50"
+                  viewBox="0 0 50 50"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M25 42L0.751293 -4.56773e-06L49.2487 -3.27948e-07L25 42Z"
+                    fill={colorMode==="dark" ? "white" : "black"}
+                  />
+                </svg>
+              </Box>
+            </VStack>
+          </Box>
+        </VStack>
       </SimpleGrid>
       <Counter currentSlide={currentSlide} />
 
@@ -62,7 +99,7 @@ const Leistungen = () => {
           IMG_IN="in"
           currentSlide={currentSlide}
           changeSlide={changeSlide}
-          fading={fading}
+          fading={inView}
         />
         <SingleLeistung
           FOR={"asd"}
@@ -74,7 +111,7 @@ const Leistungen = () => {
           IMG_IN="in2"
           currentSlide={currentSlide}
           changeSlide={changeSlide}
-          fading={fading}
+          fading={inView}
         />
         <SingleLeistung
           FOR={"asd"}
@@ -86,7 +123,7 @@ const Leistungen = () => {
           IMG_IN="in3"
           currentSlide={currentSlide}
           changeSlide={changeSlide}
-          fading={fading}
+          fading={inView}
         />
         <SingleLeistung
           FOR={"asd"}
@@ -98,8 +135,9 @@ const Leistungen = () => {
           IMG_IN="in4"
           currentSlide={currentSlide}
           changeSlide={changeSlide}
-          fading={fading}
+          fading={inView}
         />
+        <Box ref={ref} />
       </VStack>
     </>
   );

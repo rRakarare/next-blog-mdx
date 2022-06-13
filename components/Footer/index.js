@@ -5,6 +5,7 @@ import {
   Link,
   Stack,
   Text,
+  useColorMode,
   useColorModeValue,
   VisuallyHidden,
 } from "@chakra-ui/react";
@@ -12,6 +13,7 @@ import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { ReactNode } from "react";
 
 const Logo = (props) => {
+  const { colorMode } = useColorMode();
   return (
     <>
       <svg
@@ -22,7 +24,7 @@ const Logo = (props) => {
       >
         <path
           d="M60.4993 47.7395L85.6896 22.5394H98.4596V32.8693H89.9696L60.4993 62.3396L32.859 34.6993V98.4604H22.5389V22.5405H35.3089L60.4993 47.7395Z"
-          fill="#263238"
+          fill={colorMode === "light" ? "#263238" : "white"}
         />
         <path
           d="M88.4302 41.6696L79.67 50.4298V56.5697H88.14V98.4585H98.46V41.6669L88.4302 41.6696Z"
@@ -30,7 +32,7 @@ const Logo = (props) => {
         />
         <path
           d="M117.178 3.83282H3.83289V117.178H117.178V3.83282Z"
-          stroke="#263238"
+          stroke={colorMode === "light" ? "#263238" : "white"}
           strokeWidth="3.99197"
           strokeLinecap="round"
         />
@@ -66,6 +68,7 @@ const SocialButton = ({ children, label, href }) => {
 export default function Footer() {
   return (
     <Box
+      zIndex={"popover"}
       py={"1rem"}
       bg={useColorModeValue("gray.50", "gray.900")}
       color={useColorModeValue("gray.700", "gray.200")}
