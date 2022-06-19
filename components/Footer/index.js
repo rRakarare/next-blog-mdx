@@ -68,7 +68,8 @@ const SocialButton = ({ children, label, href }) => {
 export default function Footer() {
   return (
     <Box
-      zIndex={"popover"}
+    zIndex={"popover"}
+      height={"200px"}
       py={"1rem"}
       bg={useColorModeValue("gray.50", "gray.900")}
       color={useColorModeValue("gray.700", "gray.200")}

@@ -30,17 +30,18 @@ const Leistungen = () => {
     hover: {translateY:"80px"}
   }
   const stickVariant = {
-    normal: {scaleY:1, translateY:0},
-    hover: {scaleY:3, translateY:"50px"}
+    normal: {scaleY:1, translateY:0, transition: {duration:.15,type:"tween"}},
+    hover: {scaleY:2.78, translateY:"50px", transition: {duration:.1,type:"tween"}}
   }
 
   return (
     <>
-      <SimpleGrid columns={2} h={"100vh"}>
+      <SimpleGrid columns={{base:1,md:2}} h={"100vh"}>
         <Center justifyContent={"center"} alignItems={"center"}>
           <FrontText />
         </Center>
         <VStack justifyContent={"center"} alignItems={"center"}>
+          <Text>Scroll</Text>
           <Box cursor={"pointer"} onMouseEnter={()=>control.start("hover")} onMouseLeave={()=>control.start("normal")}>
             
 
@@ -103,9 +104,13 @@ const Leistungen = () => {
         />
         <SingleLeistung
           FOR={"asd"}
-          HEAD="Head"
-          DESC={"lorem ipsum"}
-          TEXT={"dsaadsdasadsdsa"}
+          HEAD="Elo Gainer"
+          DESC={
+            "Vape shoreditch four loko live-edge, vinyl kogi shaman intelligentsia hashtag hoodie succulents sustainable marfa vegan"
+          }
+          TEXT={
+            "I'm baby deep v mixtape tote bag, listicle salvia quinoa vice +1 freegan. Shaman leggings vape tousled lyft meditation, brooklyn 3 wolf moon."
+          }
           Number={2}
           IMG="test2"
           IMG_IN="in2"
@@ -115,9 +120,13 @@ const Leistungen = () => {
         />
         <SingleLeistung
           FOR={"asd"}
-          HEAD="Head"
-          DESC={"lorem ipsum"}
-          TEXT={"dsaadsdasadsdsa"}
+          HEAD="Elo Gainer"
+          DESC={
+            "Vape shoreditch four loko live-edge, vinyl kogi shaman intelligentsia hashtag hoodie succulents sustainable marfa vegan"
+          }
+          TEXT={
+            "I'm baby deep v mixtape tote bag, listicle salvia quinoa vice +1 freegan. Shaman leggings vape tousled lyft meditation, brooklyn 3 wolf moon."
+          }
           Number={3}
           IMG="test3"
           IMG_IN="in3"
@@ -127,9 +136,13 @@ const Leistungen = () => {
         />
         <SingleLeistung
           FOR={"asd"}
-          HEAD="Head"
-          DESC={"lorem ipsum"}
-          TEXT={"dsaadsdasadsdsa"}
+          HEAD="Elo Gainer"
+          DESC={
+            "Vape shoreditch four loko live-edge, vinyl kogi shaman intelligentsia hashtag hoodie succulents sustainable marfa vegan"
+          }
+          TEXT={
+            "I'm baby deep v mixtape tote bag, listicle salvia quinoa vice +1 freegan. Shaman leggings vape tousled lyft meditation, brooklyn 3 wolf moon."
+          }
           Number={4}
           IMG="test4"
           IMG_IN="in4"
