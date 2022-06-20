@@ -61,7 +61,7 @@ const Leistungen = () => {
                     x2="5.5"
                     y2="56"
                     stroke={colorMode==="dark" ? "white" : "black"}
-                    stroke-width="11"
+                    strokeWidth="11"
                   />
                 </svg>
               </Box>
