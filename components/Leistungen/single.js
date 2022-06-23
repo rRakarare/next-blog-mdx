@@ -11,37 +11,8 @@ import {
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-
-const Boxer = ({ children }) => {
-  const boxVariant = {
-    visible: { opacity: 1 },
-    hidden: { opacity: 0 },
-  };
-  const [ref, inView] = useInView({ threshold: 1 });
-  
-  const control = useAnimation();
-
-  useEffect(() => {
-    if (inView) {
-      control.start("visible");
-    } else {
-      control.start("hidden");
-    }
-  }, [control, inView]);
-
-  return (
-    <Box
-      as={motion.div}
-      ref={ref}
-      variants={boxVariant}
-      initial="hidden"
-      animate={control}
-      transitionDuration={1}
-    >
-      {children}
-    </Box>
-  );
-};
+import { useScrollDirection } from "react-use-scroll-direction";
+import SingleText from "./singleText";
 
 const SingleLeistung = ({
   FOR,
@@ -53,84 +24,109 @@ const SingleLeistung = ({
   IMG_IN,
   currentSlide,
   changeSlide,
-  fading
+  fading,
 }) => {
   const boxVariant = {
-    visible: { translateY: "0px", transition: { duration: .65 } },
-    hidden: { translateY: "100vh", transition: { duration: .65, delay: .1 } },
-    fadeout: {opacity: 0,},
-    fadein: {opacity: 1,}
+    visible: { translateY: "0px", opacity:1, transition: { duration: 0.65 } },
+    hidden: { translateY: "100vh", transition: { duration: 0.65, delay: 0.1 } },
+    fadeout: { opacity: 0 },
+    fadein: { opacity: 1 },
   };
 
   const inVariant = {
-    visible: {translateY: "0px", opacity: 1, transition: {translateY: { duration: .7, delay: .1 }, opacity: { duration: .7, delay: .3 }} },
-    hidden: { translateY: "100vh",opacity: 0, transition: {translateY: { duration: .7, delay: 0 }, opacity: { duration: .4, delay: 0 }} },
-    fadeout: {opacity: 0, display:"none"},
-    fadein: {opacity: 1, display:"block"}
+    visible: {
+      translateY: "0px",
+      opacity: 1,
+      transition: {
+        translateY: { duration: 0.7, delay: 0.1 },
+        opacity: { duration: 0.7, delay: 0.3 },
+      },
+    },
+    hidden: {
+      translateY: "100vh",
+      opacity: 0,
+      transition: {
+        translateY: { duration: 0.7, delay: 0 },
+        opacity: { duration: 0.4, delay: 0 },
+      },
+    },
+    fadeout: { opacity: 0, display: "none" },
+    fadein: { opacity: 1, display: "block" },
   };
 
-  const mobBoxVariant = {
-    visibleMob: {opacity: 1},
-    hiddenMob: {opacity: 0}
-  }
-
   const control = useAnimation();
+  const controlMob = useAnimation();
 
-  const [isLargerMD] = useMediaQuery('(min-width: 768px)')
+  const [mediaquery] = useMediaQuery("(min-width: 768px)");
 
-  const [ref, inView] = useInView({ threshold: 1 });
+
+  const [ref, inView, entry] = useInView({ threshold: 1 });
   const [mobref, mobInView] = useInView();
   const [display, setDisplay] = useState(true);
 
+  const { isScrollingUp } = useScrollDirection();
+
   useEffect(() => {
-    if (inView && Number > currentSlide) {
-      changeSlide(Number);
-    } else if (Number === currentSlide) {
-      changeSlide(Number-1)
+    if (inView) {
+      if (isScrollingUp) {
+        
+      } else {
+        changeSlide(Number)
+      }
+    } else {
+      if (isScrollingUp) {
+        changeSlide(currentSlide-1)
+      } else {
+        
+      }
     }
+    
   }, [inView]);
 
-  // useEffect(() => {
-  //   if (inView) {
-  //     control.start('visibleMob')
-  //   } else {
-  //     control.start('hiddenMob')
-  //   }
-  // }, [mobInView]);
-
-
   useEffect(() => {
-    if (fading) {
-      control.start("fadeout");
-      setDisplay(false)
-
-    } else  {
-      setDisplay(true)
-      control.start("fadein");
-    }
-  }, [fading]);
-
-
-  useEffect(() => {
-    console.log(currentSlide)
-    if (inView) {
+    if (currentSlide >= Number) {
       control.start("visible");
-    } else if (currentSlide === Number -1) {
+    } else {
       control.start("hidden");
     }
   }, [currentSlide]);
 
+  useEffect(() => {
+    if (fading) {
+      control.start("fadeout");
+      setDisplay(false);
+    } else {
+      setDisplay(true);
+      control.start("fadein");
+    }
+  }, [fading]);
+
   return (
     <>
-      <SimpleGrid zIndex={"base"} columns={{base:1,md:2}} w={"100%"} marginBottom={{base:'5rem!important', md:"50vh!important"}}>
-        <Box w={"100%"} paddingX={{base: "1.4rem", sm:"3rem", md:"4rem", lg:"5rem", xl:"8rem", '2xl':"14rem"}}>
+      <SimpleGrid
+        zIndex={"base"}
+        columns={{ base: 1, md: 2 }}
+        w={"100%"}
+        marginBottom={{ base: "5rem!important", md: "50vh!important" }}
+      >
+        <Box
+          w={"100%"}
+          paddingX={{
+            base: "1.4rem",
+            sm: "3rem",
+            md: "4rem",
+            lg: "5rem",
+            xl: "8rem",
+            "2xl": "14rem",
+          }}
+        >
           <VStack align={"flex-start"}>
-            <Boxer>
+            <SingleText>
               <Text fontWeight={"medium"} fontSize={"large"}>
                 Für | {FOR}
               </Text>
-            </Boxer>
-            <Boxer>
+            </SingleText>
+            <SingleText>
               <Heading
                 marginBottom={"1rem"}
                 color={"red"}
@@ -139,8 +135,8 @@ const SingleLeistung = ({
               >
                 {HEAD}
               </Heading>
-            </Boxer>
-            <Boxer>
+            </SingleText>
+            <SingleText>
               <Text
                 marginBottom={"1.4rem"}
                 fontWeight={"medium"}
@@ -148,15 +144,14 @@ const SingleLeistung = ({
               >
                 Für | {DESC}
               </Text>
-            </Boxer>
-            <Boxer>
+            </SingleText>
+            <SingleText>
               <Text fontWeight={"medium"} fontSize={"md"}>
                 Für | {TEXT}
               </Text>
-            </Boxer>
+            </SingleText>
             <Box
               marginTop={"20px!important"}
-              
               background={"red"}
               height={"1px"}
               w={"200px"}
@@ -164,18 +159,23 @@ const SingleLeistung = ({
             ></Box>
           </VStack>
         </Box>
-        {isLargerMD ? 
-        <Center display={display ? "block": "none"} position={{base:"relative", md:"static"}} justifyContent={"center"} alignItems={"center"}>
+
+        <Center
+          display={display ? "flex" : "none"}
+          position={"relative"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
           <Box
             as={motion.div}
             variants={boxVariant}
             initial="hidden"
             animate={control}
-            position={{base:"static", md:"fixed"}}
+            position={"fixed"}
             right={0}
             top={0}
-            height={{base:"100%", md:"100vh"}}
-            width={{base:"100%", md:"50vw"}}
+            height={"100vh"}
+            width={"50vw"}
           >
             <Image
               src={`/${IMG}.jpg`}
@@ -186,16 +186,17 @@ const SingleLeistung = ({
             />
           </Box>
           <Box
+            background={"white"}
+            p={'20px'}
             as={motion.div}
             variants={inVariant}
             initial="hidden"
             animate={control}
-            top={"calc(50vh - 200px)"}
-            right={"calc(25vw - 200px)"}
-            position={{base:"absolute", md:"fixed"}}
-            background={"red"}
-            w={"400px"}
-            h={"400px"}
+            top={{base:"auto", md:"calc(50vh - 200px)"}}
+            right={{base:"auto", md:"calc(25vw - 200px)"}}
+            position={{base:"static", md:"fixed"}}
+            w={{base:"200px", md:"400px"}}
+            h={{base:"200px", md:"400px"}}
           >
             <Image
               src={`/${IMG_IN}.jpg`}
@@ -206,49 +207,6 @@ const SingleLeistung = ({
             />
           </Box>
         </Center>
-        :
-        <Center marginTop={"5rem"} ref={mobref} position={'relative'} justifyContent={"center"} alignItems={"center"}>
-          <Box
-            as={motion.div}
-            variants={mobBoxVariant}
-            initial="hidden"
-            animate={control}
-            position={'static'}
-            right={0}
-            top={0}
-            height={'600px'}
-            width={'100%'}
-          >
-            <Image
-              src={`/${IMG}.jpg`}
-              alt="Dan Abramov"
-              width={"100%"}
-              height={"100%"}
-              objectFit={"cover"}
-            />
-          </Box>
-          <Box
-            as={motion.div}
-            variants={mobBoxVariant}
-            initial="hidden"
-            animate={control}
-            top={"calc(50% - 150px)"}
-            right={"calc(50% - 150px)"}
-            position={'absolute'}
-            background={"red"}
-            w={"300px"}
-            h={"300px"}
-          >
-            <Image
-              src={`/${IMG_IN}.jpg`}
-              alt="Dan Abramov"
-              width={"100%"}
-              height={"100%"}
-              objectFit={"cover"}
-            />
-          </Box>
-        </Center>
-        }
       </SimpleGrid>
     </>
   );
