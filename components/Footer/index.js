@@ -68,7 +68,9 @@ const SocialButton = ({ children, label, href }) => {
 export default function Footer() {
   return (
     <Box
-      height={"200px"}
+      position={"relative"}
+      zIndex={"overlay"}
+      height={"100%"}
       py={"1rem"}
       bg={useColorModeValue("gray.50", "gray.900")}
       color={useColorModeValue("gray.700", "gray.200")}

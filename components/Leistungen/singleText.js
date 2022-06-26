@@ -8,7 +8,7 @@ const SingleText = ({ children }) => {
       visible: { opacity: 1 },
       hidden: { opacity: 0 },
     };
-    const [ref, inView] = useInView({ threshold: 1 });
+    const [ref, inView] = useInView({ threshold: .4 });
     
     const control = useAnimation();
   

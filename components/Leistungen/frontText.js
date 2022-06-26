@@ -1,22 +1,32 @@
-import { Box, Heading, Text, VStack } from "@chakra-ui/react"
+import { Box, Heading, Text, useTheme, VStack } from "@chakra-ui/react"
 
 const FrontText = () => {
+
+  const theme = useTheme()
+
     return <>
-    <Box marginTop={"200px"} marginBottom={"200px"} w={"500px"}>
+    <Box marginTop={"200px"} marginBottom={"200px"} paddingX={{
+            base: "1.4rem",
+            sm: "3rem",
+            md: "4rem",
+            lg: "5rem",
+            xl: "8rem",
+            "2xl": "14rem",
+          }}>
           <VStack align={"flex-start"}>
             
               <Text fontWeight={"medium"} fontSize={"large"}>
-                Für | adsdas
+                Leistungen
               </Text>
             
             
               <Heading
                 marginBottom={"1rem"}
-                color={"red"}
+                color={theme.colors.primary[100]}
                 fontWeight={"bold"}
                 fontSize={"7xl"}
               >
-                adsdasdas
+                Modular One | Four dollar toast blue
               </Heading>
             
             
@@ -25,12 +35,12 @@ const FrontText = () => {
                 fontWeight={"medium"}
                 fontSize={"2xl"}
               >
-                Für adsadsdsadsa
+                lorem
               </Text>
             
             
               <Text fontWeight={"medium"} fontSize={"md"}>
-                Fürdasdsadsads
+              I'm baby iceland church-key ramps, seitan farm-to-table slow-carb meggings meh
               </Text>
             
 

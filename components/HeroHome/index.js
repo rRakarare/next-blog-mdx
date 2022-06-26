@@ -32,7 +32,6 @@ export default function HeroHome() {
   const { colorMode, toggleColorMode } = useColorMode();
   const theme = useTheme()
 
-  console.log("theme", theme)
 
   const grad = colorMode === "light" ? "linear-gradient(90deg, #ffffff 20%, #a5a3a3)" : `linear-gradient(60deg, ${theme.colors.dark2} 50%, #848484)`
 

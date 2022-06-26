@@ -5,6 +5,7 @@ import {
   SimpleGrid,
   Text,
   useColorMode,
+  useTheme,
   VStack,
 } from "@chakra-ui/react";
 import { motion, useAnimation, useTransform, useViewportScroll } from "framer-motion";
@@ -18,6 +19,7 @@ const Leistungen = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { colorMode, toggleColorMode } = useColorMode();
   const [ref, inView] = useInView({ threshold: 1 });
+  const theme = useTheme()
 
   const control = useAnimation();
 
@@ -100,7 +102,7 @@ const Leistungen = () => {
           IMG_IN="in"
           currentSlide={currentSlide}
           changeSlide={changeSlide}
-          fading={inView}
+          color={theme.colors.one}
         />
         <SingleLeistung
           FOR={"asd"}
@@ -116,7 +118,7 @@ const Leistungen = () => {
           IMG_IN="in2"
           currentSlide={currentSlide}
           changeSlide={changeSlide}
-          fading={inView}
+          color={theme.colors.two}
         />
         <SingleLeistung
           FOR={"asd"}
@@ -132,7 +134,7 @@ const Leistungen = () => {
           IMG_IN="in3"
           currentSlide={currentSlide}
           changeSlide={changeSlide}
-          fading={inView}
+          color={theme.colors.three}
         />
         <SingleLeistung
           FOR={"asd"}
@@ -148,9 +150,8 @@ const Leistungen = () => {
           IMG_IN="in4"
           currentSlide={currentSlide}
           changeSlide={changeSlide}
-          fading={inView}
+          color={theme.colors.four}
         />
-        <Box ref={ref} />
       </VStack>
     </>
   );
