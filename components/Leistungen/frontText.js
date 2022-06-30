@@ -40,7 +40,7 @@ const FrontText = () => {
             
             
               <Text fontWeight={"medium"} fontSize={"md"}>
-              I'm baby iceland church-key ramps, seitan farm-to-table slow-carb meggings meh
+              Im baby iceland church-key ramps, seitan farm-to-table slow-carb meggings meh
               </Text>
             
 

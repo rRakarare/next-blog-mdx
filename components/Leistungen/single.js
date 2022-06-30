@@ -45,6 +45,8 @@ const SingleLeistung = ({
   };
 
   const inVariant = {
+    colorized: { scale: 1.4 },
+    decolorized: { scale: 1 },
     visibleMob: {
       translateY: "0px",
       opacity: 1,
@@ -192,10 +194,12 @@ const SingleLeistung = ({
             ></Box>
           </Box>
           <Box
-            onMouseEnter={() => setColorized(true)}
-            onMouseLeave={() => setColorized(false)}
+            cursor={"pointer"}
+            onHoverStart={() => setColorized(true)}
+            onHoverEnd={() => setColorized(false)}
             background={"white"}
-            p={"20px"}
+            marginTop={{ base: "4rem", md: "0" }}
+            p={{ base: "6px", md: "20px" }}
             as={motion.div}
             variants={inVariant}
             initial="hidden"
